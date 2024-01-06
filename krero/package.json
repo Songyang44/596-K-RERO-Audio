@@ -1,0 +1,22 @@
+{
+  "name": "krero",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Songyang44/596-K-RERO-Audio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Songyang44/596-K-RERO-Audio/issues"
+  },
+  "homepage": "https://github.com/Songyang44/596-K-RERO-Audio#readme",
+  "description": "",
+  "dependencies": {
+    "solid-auth-client": "^2.5.6"
+  }
+}
