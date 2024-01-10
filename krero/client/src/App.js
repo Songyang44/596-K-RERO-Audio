@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Record from "./components/layout/record/Record";
 import solidAuth from "solid-auth-client";
 import ChooseFile from "./components/layout/choose/chooseFile";
+import SpeechToText from "./components/layout/speechToText/speechToText";
 import AudioVisualizer from "./components/layout/wave/waveform";
 import { useSolidAuth } from "@ldo/solid-react";
 import Login from "./components/layout/login/Login";
@@ -105,6 +106,7 @@ function App() {
               <ChooseFile />
 
               <Record />
+              <SpeechToText />
             </div>
 
             <button onClick={logout}>logout </button>
