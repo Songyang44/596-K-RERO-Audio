@@ -1,17 +1,15 @@
 import React, { useState, useRef } from "react";
-export default function ChooseFileToUpload() {
-  const [selectFile, setSelectFile] = useState(null);
+
+export default function ChooseFileToUpload({ setAudioFile }) {
+  const [selectedFileName, setSelectedFileName] = useState("");
   const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectFile(file.name);
+      setAudioFile(file); // 更新父组件中的audioFile状态
+      setSelectedFileName(file.name);
     }
-  };
-
-  const handleCustomFileButtonClick = () => {
-    fileInputRef.current.click();
   };
 
   return (
@@ -23,8 +21,8 @@ export default function ChooseFileToUpload() {
         ref={fileInputRef}
         style={{ display: "none" }}
       ></input>
-      <button onClick={handleCustomFileButtonClick}>Choose File</button>
-      <input type="text" value={selectFile || ""} readOnly></input>
+      <button onClick={() => fileInputRef.current.click()}>Choose File</button>
+      <input type="text" value={selectedFileName || ""} readOnly></input>
     </div>
   );
 }

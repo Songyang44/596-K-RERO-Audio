@@ -1,12 +1,11 @@
 import "./App.css";
-import React, { useState, useRef, useEffect } from "react";
-import Login from "./components/layout/login/Login";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import React, { useState,useEffect } from "react";
 import Record from "./components/layout/record/Record";
-import { LoginButton, useSession, LogoutButton } from "@inrupt/solid-ui-react";
-import { login, logout, fetch } from "solid-auth-client";
 import solidAuth from "solid-auth-client";
 import ChooseFile from "./components/layout/choose/chooseFile";
+import { useSolidAuth } from "@ldo/solid-react";
+import Login from "./components/layout/login/Login";
+import {Session} from "@inrupt/solid-client-authn-browser";
 // const authOptions = {
 //   clientName: "Krero",
 // };
@@ -68,27 +67,56 @@ function App() {
   //   return <div>Loading......</div>;
   // }
 
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  
+  
   const login = async () => {
     await solidAuth.login("https://localhost:8443/");
     const session = await solidAuth.currentSession();
+    console.log(session);
     if (session) {
-      setUser(session.webId);
+      setUser(true);
     }
+    setUser(true);
+    console.log(user);
+    await session.login({
+      oidcIssuer: 'https://localhost:8443',
+      redirectUrl: window.location.href,
+      clientName: 'Krero'
+    });
   };
 
   const logout = async () => {
-    await solidAuth.logout();
-    setUser(null);
+    solidAuth.logout();
+    setUser(false);
   };
+
+  // const solidAuth = useSolidAuth();
+  // console.log(solidAuth);
+  // const { session, login, logout } = useSolidAuth();
 
   return (
     <>
       <div>
         {user ? (
           <>
+          <ChooseFile />
+          <Record />
+          <button onClick={logout}>logout </button>
+          </>
+          
+        ) : (
+          <button onClick={login}>login</button>
+        )}
+      </div>
+      {/* <Login /> */}
+      {/* <div>
+        {session.isLoggedIn ? (
+          <>
             <div>
-              <p>You are logged in as {user}</p>
+              <p>You are logged in as {session.webId}. </p>
               <button onClick={logout}>Logout</button>
             </div>
             <div className="selectFile">
@@ -99,7 +127,18 @@ function App() {
           <>
             <div>
               <p>You are not logged in .</p>
-              <button onClick={login}>Login</button>
+              <button
+                onClick={() => {
+                  const issuer = prompt(
+                    "Enter your Solid Issuer",
+                    "https://localhost:8443"
+                  );
+                  if (!issuer) return;
+                  login(issuer);
+                }}
+              >
+                Login
+              </button>
             </div>
 
             <div className="record">
@@ -107,8 +146,8 @@ function App() {
               <Record />
             </div>
           </>
-        )}
-        {/* {session.info.isLoggedIn ? (
+        )} */}
+      {/* {session.info.isLoggedIn ? (
           // <>
           //   <div>
           //     <span>You are logged in as :{session.info.webId}</span>
@@ -127,7 +166,7 @@ function App() {
           //   />
           // </div>
         )} */}
-      </div>
+      {/* </div> */}
 
       {/* <Router>
         <Routes>

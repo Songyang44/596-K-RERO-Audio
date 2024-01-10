@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import UploadFile from "../../store/uploadFile";
+// import WaveSurfer from "wavesurfer.js";
+// import MicrophonePlugin from "wavesurfer.js/src/plugin/microphone";
 
 export default function Recording() {
   const [mediaRecorder, setMediaRecorder] = useState(null);
@@ -6,6 +9,26 @@ export default function Recording() {
   const [recording, setRecording] = useState(false);
   const [coverImage, setCoverImage] = useState(null);
   const [description, setDescription] = useState("");
+  const [storyData, setStoryData] = useState({
+    audioBlob: null,
+    description: "",
+    coverImage: null,
+  });
+  // const inputFileRef=useRef();
+  // const waveformRef = useRef(null);
+  // const wavesurfer = useRef(null);
+  // const microphone = useRef(null);
+
+  // useEffect(() => {
+  //   wavesurfer.current = WaveSurfer.create({
+  //     container: waveformRef.current,
+  //     waveColor: "violet",
+  //     progressColor: "purple",
+  //     plugins: [MicrophonePlugin.create()],
+  //   });
+  //   microphone.current = wavesurfer.microphone;
+  //   return () => wavesurfer.destroy();
+  // }, []);
 
   const handleStartRecording = async () => {
     try {
@@ -30,12 +53,22 @@ export default function Recording() {
     } catch (error) {
       console.error("Error starting recording:", error);
     }
+
+    // if(navigator.mediaDevices){
+    //   const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    //   wavesurfer.current.loadDecodedBuffer(stream);
+    //   wavesurfer.current.play();
+    // }
+    // microphone.current.start();
   };
 
   const handleStopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
     }
+
+    // wavesurfer.current.stop();
+    // microphone.current.stop();
   };
 
   const handleSaveRecording = () => {
@@ -47,12 +80,18 @@ export default function Recording() {
     const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
     const audioUrl = URL.createObjectURL(audioBlob);
 
-    // You can do something with the audio data or display it as an audio element.
-    // For example:
-    // const audioElement = new Audio(audioUrl);
-    // audioElement.play();
+    const audioElement = new Audio(audioUrl);
+    audioElement.play();
 
-    // To save the audio file, you can create a download link.
+    const newStoryData = {
+      audioBlob,
+      description,
+      coverImage,
+    };
+
+    setStoryData(newStoryData);
+
+    // To save the audio file,  create a download link.
     const a = document.createElement("a");
     a.href = audioUrl;
     a.download = "recorded-audio.wav";
@@ -60,7 +99,6 @@ export default function Recording() {
   };
 
   const handleSelectImage = () => {
-    // 模拟点击文件输入元素
     if (inputFileRef.current) {
       inputFileRef.current.click();
     }
@@ -108,7 +146,9 @@ export default function Recording() {
         style={{ display: "none" }} // 隐藏文件输入元素
       />
       <button onClick={handleSelectImage}>Select Image</button>
-      <button>Upload Story</button>
+      {/* <button>Upload Story</button> */}
+      {/* <div id="waveform" ref={waveformRef}></div> */}
+      <UploadFile storyData={storyData} />
     </div>
   );
 }
