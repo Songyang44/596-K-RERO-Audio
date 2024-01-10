@@ -1,11 +1,12 @@
 import "./App.css";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Record from "./components/layout/record/Record";
 import solidAuth from "solid-auth-client";
 import ChooseFile from "./components/layout/choose/chooseFile";
+import AudioVisualizer from "./components/layout/wave/waveform";
 import { useSolidAuth } from "@ldo/solid-react";
 import Login from "./components/layout/login/Login";
-import {Session} from "@inrupt/solid-client-authn-browser";
+import { Session } from "@inrupt/solid-client-authn-browser";
 // const authOptions = {
 //   clientName: "Krero",
 // };
@@ -70,8 +71,6 @@ function App() {
   const [user, setUser] = useState(true);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
-  
   const login = async () => {
     await solidAuth.login("https://localhost:8443/");
     const session = await solidAuth.currentSession();
@@ -82,9 +81,9 @@ function App() {
     setUser(true);
     console.log(user);
     await session.login({
-      oidcIssuer: 'https://localhost:8443',
+      oidcIssuer: "https://localhost:8443",
       redirectUrl: window.location.href,
-      clientName: 'Krero'
+      clientName: "Krero",
     });
   };
 
@@ -102,11 +101,14 @@ function App() {
       <div>
         {user ? (
           <>
-          <ChooseFile />
-          <Record />
-          <button onClick={logout}>logout </button>
+            <div className="record">
+              <ChooseFile />
+
+              <Record />
+            </div>
+
+            <button onClick={logout}>logout </button>
           </>
-          
         ) : (
           <button onClick={login}>login</button>
         )}
