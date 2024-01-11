@@ -10,8 +10,14 @@ import AudioVisualizer from "./components/layout/wave/waveform";
 import { useSolidAuth } from "@ldo/solid-react";
 import Login from "./components/layout/login/Login";
 import { Session } from "@inrupt/solid-client-authn-browser";
+import UploadFile from "./components/store/uploadFile";
 
 function App() {
+  const [uploadData, setUploadData] = useState(null);
+
+  const handleUpload = (data) => {
+    setUploadData(data);
+  };
   const [user, setUser] = useState(true);
 
   const login = async () => {
@@ -47,6 +53,13 @@ function App() {
               <SpeechToText /> */}
               <CombineofAudioRecorderandSpeech />
               <EditorofAudio />
+              {uploadData && (
+                <UploadFile
+                  audioUrl={uploadData.audioUrl}
+                  imageUrl={uploadData.imageUrl}
+                  textContent={uploadData.textContent}
+                />
+              )}
             </div>
 
             <button onClick={logout}>logout </button>

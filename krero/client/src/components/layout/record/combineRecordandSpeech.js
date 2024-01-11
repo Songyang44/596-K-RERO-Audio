@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import UploadFile from "../../store/uploadFile";
 
-const CombineofAudioRecorderandSpeech = () => {
+const CombineofAudioRecorderandSpeech = ({onUpload}) => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioUrl, setAudioUrl] = useState("");
@@ -155,6 +156,15 @@ const CombineofAudioRecorderandSpeech = () => {
     }
   };
 
+  const [shouldUpload, setShouldUpload] = useState(false);
+
+  const handleUploadClick = () => {
+    setShouldUpload(true);
+    if (onUpload) {
+      onUpload({ audioUrl, imageUrl, editableTranscript });
+    } // 调用传递进来的函数
+  };
+
   // 触发文件选择
   const triggerFileSelect = () => fileInputRef.current.click();
 
@@ -197,6 +207,11 @@ const CombineofAudioRecorderandSpeech = () => {
         value={editableTranscript + transcript}
         onChange={handleTextChange}
       />
+
+      <button onClick={handleUploadClick}>Upload Data</button>
+      {shouldUpload && (
+        <UploadFile audioUrl={audioUrl} imageUrl={imageUrl} editableTranscript={editableTranscript} />
+      )}
     </div>
   );
 };
