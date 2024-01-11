@@ -78,12 +78,24 @@ const AudioRecorder = () => {
     animationRef.current = requestAnimationFrame(draw);
   };
 
+  const resetRecording = () => {
+    if (isRecording && mediaRecorder) {
+      mediaRecorder.stop(); // 停止录音
+      window.cancelAnimationFrame(animationRef.current); // 停止绘制波形
+    }
+    setIsRecording(false);
+    setAudioUrl(""); // 清除录音 URL
+    // 这里可以添加任何其他需要重置的状态或数据
+  };
+
   return (
     <>
       <div>
         <button onClick={isRecording ? stopRecording : startRecording}>
           {isRecording ? "Stop Recording" : "Start Recording"}
         </button>
+        <button onClick={resetRecording}>Reset Recording</button>{" "}
+        {/* 添加重置按钮 */}
         {audioUrl && (
           <audio src={audioUrl} controls>
             Your browser does not support the audio element.
