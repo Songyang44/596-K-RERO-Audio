@@ -1,33 +1,60 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
-import Record from "./components/layout/record/Record";
+import React, { useState } from "react";
 import CombineofAudioRecorderandSpeech from "./components/layout/record/combineRecordandSpeech";
+import { FriendsCircle } from "./components/layout/friends/friends";
+import Community from "./components/layout/community/community";
 import solidAuth from "solid-auth-client";
-import ChooseFile from "./components/layout/choose/chooseFile";
-import SpeechToText from "./components/layout/speechToText/speechToText";
 import EditorofAudio from "./components/layout/AudioEditor/AudioEditor";
-import AudioVisualizer from "./components/layout/wave/waveform";
-import { useSolidAuth } from "@ldo/solid-react";
-import Login from "./components/layout/login/Login";
-import { Session } from "@inrupt/solid-client-authn-browser";
 import UploadFile from "./components/store/uploadFile";
+import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 function App() {
   const [uploadData, setUploadData] = useState(null);
 
+  const friends = [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" },
+    { id: 3, name: "Charlie" },
+  ];
+  // const posts = [
+  //   {
+  //     id: 1,
+  //     user: {
+  //       name: "Alice",
+  //       avatarUrl: "arterLogin.png",
+  //     },
+  //     content: "This is the first post content.",
+  //   },
+  //   {
+  //     id: 2,
+  //     user: {
+  //       name: "Bob",
+  //       avatarUrl: "beforLogin.jpg",
+  //     },
+  //     content: "This is the second post content.",
+  //   },
+  // ];
+
   const handleUpload = (data) => {
     setUploadData(data);
   };
+
+  const [posts, setPosts] = useState([]);
+
+  const handleAddPost = (newPost) => {
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+  };
   const [user, setUser] = useState(true);
+  const [isLoggedin, setIsLoggedIn] = useState(true);
 
   const login = async () => {
     await solidAuth.login("https://localhost:8443/");
     const session = await solidAuth.currentSession();
     console.log(session);
     if (session) {
-      setUser(true);
+      setUser(session);
     }
-    setUser(true);
+    setIsLoggedIn(true);
     console.log(user);
     await session.login({
       oidcIssuer: "https://localhost:8443",
@@ -38,34 +65,97 @@ function App() {
 
   const logout = async () => {
     solidAuth.logout();
-    setUser(false);
+    setIsLoggedIn(false);
   };
+
+  
 
   return (
     <>
-      <div>
-        {user ? (
+      <div
+        className={
+          isLoggedin ? "background-after-login" : "background-before-login"
+        }
+      >
+        {isLoggedin ? (
           <>
-            <div className="record">
-              <ChooseFile />
+            <Router>
+              <div className="navbar">
+                <button className="logout" style={{width:"80px", height:"50px",borderRadius:"50%",cursor:"pointer"}} onClick={logout}>
+                  logout
+                </button>
+                <nav className="navbar">
+                  <ul>
+                    <li>
+                      <Link to="/CombineofAudioRecorderandSpeech">Record</Link>
+                    </li>
+                    <li>
+                      <Link to="/EditorofAudio">Editor</Link>
+                    </li>
+                    <li>
+                      <Link to="/friendsCicle">Friends</Link>
+                    </li>
+                    <li>
+                      <Link to="/Community">Community</Link>
+                    </li>
+                  </ul>
+                </nav>
 
-              {/* <Record />
-              <SpeechToText /> */}
-              <CombineofAudioRecorderandSpeech />
-              <EditorofAudio />
-              {uploadData && (
-                <UploadFile
-                  audioUrl={uploadData.audioUrl}
-                  imageUrl={uploadData.imageUrl}
-                  textContent={uploadData.textContent}
-                />
-              )}
-            </div>
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <div className="component">
+                  <Routes>
+                    <Route
+                      path="/CombineofAudioRecorderandSpeech"
+                      element={
+                        <CombineofAudioRecorderandSpeech
+                          onAddPost={handleAddPost}
+                        />
+                      }
+                    />
+                    <Route path="/EditorofAudio" element={<EditorofAudio />} />
+                    <Route
+                      path="/friendsCicle"
+                      element={<FriendsCircle friends={friends} />}
+                    />
+                    <Route
+                      path="/Community"
+                      element={<Community posts={posts} />}
+                    />
+                  </Routes>
+                </div>
+              </div>
+            </Router>
 
-            <button onClick={logout}>logout </button>
+            {uploadData && (
+              <UploadFile
+                audioUrl={uploadData.audioUrl}
+                imageUrl={uploadData.imageUrl}
+                textContent={uploadData.textContent}
+              />
+            )}
           </>
         ) : (
-          <button onClick={login}>login</button>
+          <>
+            <div className="login">
+              <button
+                
+                style={{ width: "80px", height: "40px", borderRadius: "40%" }}
+                onClick={login}
+              >
+                login
+              </button>
+              <p
+                style={{
+                  color: "black",
+                  fontFamily: "Papyrus",
+                  marginTop: "140px",
+                }}
+              >
+                Please login first
+              </p>
+            </div>
+          </>
         )}
       </div>
     </>

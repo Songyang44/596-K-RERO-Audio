@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import UploadFile from "../../store/uploadFile";
+import { translateText } from "../../layout/translator/translate";
+import Post from "../post/post";
 
-const CombineofAudioRecorderandSpeech = ({onUpload}) => {
+const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioUrl, setAudioUrl] = useState("");
@@ -132,7 +134,13 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
       recognition.stop();
       setIsListening(false);
     }
+    setImage(null);
     setImageUrl("");
+    setImageName("");
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     setTranscript("");
     setEditableTranscript("");
   };
@@ -145,6 +153,11 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
 
   const handleTextChange = (e) => {
     setEditableTranscript(e.target.value);
+    adjustTextareaHeight(e.target);
+  };
+  const adjustTextareaHeight = (textarea) => {
+    textarea.style.height = "auto"; // 先重置高度
+    textarea.style.height = textarea.scrollHeight + "px"; // 然后设置为滚动高度
   };
 
   const handleImageUpload = (event) => {
@@ -165,6 +178,29 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
     } // 调用传递进来的函数
   };
 
+  // const [showPost, setShowPost] = useState(false);
+  // const createPost = () => {
+  //   if (audioUrl || imageUrl || editableTranscript) {
+  //     setShowPost(true);
+  //   } else {
+  //     alert("没有足够的内容来创建帖子。");
+  //   }
+  // };
+
+  const handleCreatePost = () => {
+    const newPost = {
+      audioUrl: audioUrl,
+      imageUrl: imageUrl,
+      editableTranscript: editableTranscript,
+    };
+    onAddPost(newPost);
+    alert("Create successfully");
+  };
+  const handleTranslate = async () => {
+    const translated = await translateText(editableTranscript);
+    setEditableTranscript(translated);
+  };
+
   // 触发文件选择
   const triggerFileSelect = () => fileInputRef.current.click();
 
@@ -173,7 +209,7 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
       <button onClick={isRecording ? stopRecording : startRecording}>
         {isRecording ? "Stop Recording" : "Start Recording"}
       </button>
-      <button onClick={resetRecording}>Reset Recording</button>{" "}
+      {/* <button onClick={resetRecording}>Reset Recording</button>{" "} */}
       <button onClick={triggerFileSelect}>Upload Image</button>{" "}
       {/* 自定义的上传图片按钮 */}
       <input
@@ -184,12 +220,56 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
         style={{ display: "none" }}
       />{" "}
       {/* 隐藏的文件输入控件 */}
+      {/* {imageUrl && (
+        <div>
+          <img
+            src={imageUrl}
+            alt="Cover"
+            style={{ width: "100px", height: "100px" }}
+          />
+          <p>{imageName}</p>
+        </div>
+      )} */}
+      <button onClick={startListening}>Start Listening</button>
+      <button onClick={stopListening}>End Listening</button>
+      <button onClick={resetRecording}>Reset</button> {/* 新增的重置按钮 */}
+      <textarea
+        style={{
+          width: "100%", // 使文本域占据整个屏幕宽度
+          minHeight: "100px", // 设置一个最小高度
+          // 可选，防止用户手动调整大小
+        }}
+        value={editableTranscript + transcript}
+        onChange={handleTextChange}
+      />
+      {/* <textarea
+        value={editableTranscript}
+        onChange={(e) => setEditableTranscript(e.target.value)}
+      /> */}
+      <button onClick={handleTranslate}>Translate to Māori</button>
+      <button onClick={handleUploadClick}>Upload Data</button>
+      {shouldUpload && (
+        <UploadFile
+          audioUrl={audioUrl}
+          imageUrl={imageUrl}
+          editableTranscript={editableTranscript}
+        />
+      )}
+      <button onClick={handleCreatePost}>Create Post</button>
+      {/* <button onClick={createPost}>Create Post</button>
+      {showPost && (
+        <Post
+          audioUrl={audioUrl}
+          imageUrl={imageUrl}
+          editableTranscript={editableTranscript}
+        />
+      )} */}
+      <canvas ref={canvasRef} width="600" height="100"></canvas>
       {audioUrl && (
         <audio src={audioUrl} controls>
           Your browser does not support the audio element.
         </audio>
       )}
-      <canvas ref={canvasRef} width="600" height="100"></canvas>
       {imageUrl && (
         <div>
           <img
@@ -199,18 +279,6 @@ const CombineofAudioRecorderandSpeech = ({onUpload}) => {
           />
           <p>{imageName}</p>
         </div>
-      )}
-      <button onClick={startListening}>Start Listening</button>
-      <button onClick={stopListening}>End Listening</button>
-      <button onClick={resetRecording}>Reset</button> {/* 新增的重置按钮 */}
-      <textarea
-        value={editableTranscript + transcript}
-        onChange={handleTextChange}
-      />
-
-      <button onClick={handleUploadClick}>Upload Data</button>
-      {shouldUpload && (
-        <UploadFile audioUrl={audioUrl} imageUrl={imageUrl} editableTranscript={editableTranscript} />
       )}
     </div>
   );

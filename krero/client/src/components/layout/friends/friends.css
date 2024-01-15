@@ -1,0 +1,8 @@
+/* App.css 或 EditorofAudio.css */
+.editor-audio-background {
+    background-image: url('./resource/beforLogin.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    /* 其他必要的样式 */
+  }
+  
