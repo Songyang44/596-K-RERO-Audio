@@ -132,13 +132,20 @@ const EditorofAudio = () => {
     setEnd(0);
   };
 
+  const handleFileButtonClick = () => {
+    document.getElementById('hiddenFileInput').click();
+  };
+
   return (
     <div>
+      <button onClick={handleFileButtonClick}>Choose Audio</button>
       <input
+      id="hiddenFileInput"
         type="file"
         accept="audio/*"
         onChange={handleFileChange}
-        style={{ display: "block", margin: "10px 0" }}
+        style={{ display: "none", margin: "10px 0" }}
+        
       />
       <div id="waveform" ref={waveformRef}></div>
       <button onClick={playPause}>Play/Pause</button>

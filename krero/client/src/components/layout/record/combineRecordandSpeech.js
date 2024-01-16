@@ -19,38 +19,43 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
   const [editableTranscript, setEditableTranscript] = useState("");
+  const recognitionRef = useRef();
 
-  const SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  const recognition = new SpeechRecognition();
+  useEffect(() => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognitionRef.current = new SpeechRecognition();
+    recognitionRef.current.continuous = true;
+    recognitionRef.current.interimResults = true;
+    recognitionRef.current.lang = "en-US";
 
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  recognition.lang = "en-US";
-
-  recognition.onresult = (event) => {
-    let interimTranscript = "";
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcriptPart = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        setEditableTranscript((prev) => prev + transcriptPart + " ");
-        setTranscript("");
-      } else {
-        interimTranscript += transcriptPart;
+    recognitionRef.current.onresult = (event) => {
+      let interimTranscript = "";
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const transcriptPart = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          setEditableTranscript((prev) => prev + transcriptPart + " ");
+        } else {
+          interimTranscript += transcriptPart;
+        }
       }
-    }
-    setTranscript(interimTranscript);
-  };
+      setTranscript(interimTranscript);
+    };
+
+    return () => {
+      recognitionRef.current.stop();
+    };
+  }, []);
 
   const startListening = () => {
     if (!isListening) {
-      recognition.start();
+      recognitionRef.current.start();
       setIsListening(true);
     }
   };
 
   const stopListening = () => {
-    recognition.stop();
+    recognitionRef.current.stop();
     setIsListening(false);
   };
 
@@ -75,6 +80,8 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
       setMediaRecorder(recorder);
       setIsRecording(true);
       draw();
+
+      startListening();
     }
   };
 
@@ -84,6 +91,8 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
     mediaRecorder.stop();
     setIsRecording(false);
     window.cancelAnimationFrame(animationRef.current);
+
+    stopListening();
   };
 
   // 绘制波形
@@ -131,7 +140,7 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
     setAudioUrl(""); // 清除录音 URL
     // 这里可以添加任何其他需要重置的状态或数据
     if (isListening) {
-      recognition.stop();
+      recognitionRef.current.stop();
       setIsListening(false);
     }
     setImage(null);
@@ -143,21 +152,17 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setTranscript("");
     setEditableTranscript("");
-  };
 
-  useEffect(() => {
-    return () => {
-      recognition.stop();
-    };
-  }, []);
+    setShouldUpload(false);
+  };
 
   const handleTextChange = (e) => {
     setEditableTranscript(e.target.value);
     adjustTextareaHeight(e.target);
   };
   const adjustTextareaHeight = (textarea) => {
-    textarea.style.height = "auto"; // 先重置高度
-    textarea.style.height = textarea.scrollHeight + "px"; // 然后设置为滚动高度
+    textarea.style.height = "auto"; // setup of height
+    textarea.style.height = textarea.scrollHeight + "px"; // Set to scroll height
   };
 
   const handleImageUpload = (event) => {
@@ -175,17 +180,8 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
     setShouldUpload(true);
     if (onUpload) {
       onUpload({ audioUrl, imageUrl, editableTranscript });
-    } // 调用传递进来的函数
+    }
   };
-
-  // const [showPost, setShowPost] = useState(false);
-  // const createPost = () => {
-  //   if (audioUrl || imageUrl || editableTranscript) {
-  //     setShowPost(true);
-  //   } else {
-  //     alert("没有足够的内容来创建帖子。");
-  //   }
-  // };
 
   const handleCreatePost = () => {
     const newPost = {
@@ -201,17 +197,26 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
     setEditableTranscript(translated);
   };
 
-  // 触发文件选择
+  //
   const triggerFileSelect = () => fileInputRef.current.click();
+
+  const handleLanguageChange = (language) => {
+    if (recognitionRef.current) {
+      recognitionRef.current.lang = language;
+    }
+  };
 
   return (
     <div>
+      <select onChange={handleLanguageChange}>
+        <option value="en-US">English (US)</option>
+        <option value="mi">Māori</option>
+        <option value="zh-CN">Chinese</option>
+      </select>
       <button onClick={isRecording ? stopRecording : startRecording}>
         {isRecording ? "Stop Recording" : "Start Recording"}
       </button>
-      {/* <button onClick={resetRecording}>Reset Recording</button>{" "} */}
       <button onClick={triggerFileSelect}>Upload Image</button>{" "}
-      {/* 自定义的上传图片按钮 */}
       <input
         type="file"
         accept="image/*"
@@ -219,20 +224,7 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
         ref={fileInputRef}
         style={{ display: "none" }}
       />{" "}
-      {/* 隐藏的文件输入控件 */}
-      {/* {imageUrl && (
-        <div>
-          <img
-            src={imageUrl}
-            alt="Cover"
-            style={{ width: "100px", height: "100px" }}
-          />
-          <p>{imageName}</p>
-        </div>
-      )} */}
-      <button onClick={startListening}>Start Listening</button>
-      <button onClick={stopListening}>End Listening</button>
-      <button onClick={resetRecording}>Reset</button> {/* 新增的重置按钮 */}
+      <button onClick={resetRecording}>Reset</button> {/* reset button */}
       <textarea
         style={{
           width: "100%", // 使文本域占据整个屏幕宽度
@@ -242,10 +234,6 @@ const CombineofAudioRecorderandSpeech = ({ onUpload, onAddPost }) => {
         value={editableTranscript + transcript}
         onChange={handleTextChange}
       />
-      {/* <textarea
-        value={editableTranscript}
-        onChange={(e) => setEditableTranscript(e.target.value)}
-      /> */}
       <button onClick={handleTranslate}>Translate to Māori</button>
       <button onClick={handleUploadClick}>Upload Data</button>
       {shouldUpload && (

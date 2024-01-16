@@ -65,8 +65,7 @@
   min-height: 100vh;
   margin-top: -400px;
 }
-.logout{
-
+.logout {
 }
 /* Navbar.css */
 .navbar {
@@ -100,7 +99,7 @@
   padding: 0;
 }
 .component {
-  background-color: #f8f8f8; /* 浅色背景用于组件 */
+  background-color: #f8f8f8;
   padding: 20px;
   margin-top: 20px;
 }
@@ -117,9 +116,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* 视口的全高 */
+  height: 100vh;
   background-image: url("./resource/beforLogin.jpg");
-  background-size: contain; /* 或者可以用一个固定大小，比如 500px 300px */
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -127,7 +126,4 @@
 .background-after-login {
   background-image: url("./resource/beforLogin.jpg");
   background-size: cover;
-  /* 其他背景样式根据需要添加 */
 }
-
-

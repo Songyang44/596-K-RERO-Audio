@@ -16,24 +16,6 @@ function App() {
     { id: 2, name: "Bob" },
     { id: 3, name: "Charlie" },
   ];
-  // const posts = [
-  //   {
-  //     id: 1,
-  //     user: {
-  //       name: "Alice",
-  //       avatarUrl: "arterLogin.png",
-  //     },
-  //     content: "This is the first post content.",
-  //   },
-  //   {
-  //     id: 2,
-  //     user: {
-  //       name: "Bob",
-  //       avatarUrl: "beforLogin.jpg",
-  //     },
-  //     content: "This is the second post content.",
-  //   },
-  // ];
 
   const handleUpload = (data) => {
     setUploadData(data);
@@ -68,8 +50,6 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  
-
   return (
     <>
       <div
@@ -81,7 +61,16 @@ function App() {
           <>
             <Router>
               <div className="navbar">
-                <button className="logout" style={{width:"80px", height:"50px",borderRadius:"50%",cursor:"pointer"}} onClick={logout}>
+                <button
+                  className="logout"
+                  style={{
+                    width: "80px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                  }}
+                  onClick={logout}
+                >
                   logout
                 </button>
                 <nav className="navbar">
@@ -139,7 +128,6 @@ function App() {
           <>
             <div className="login">
               <button
-                
                 style={{ width: "80px", height: "40px", borderRadius: "40%" }}
                 onClick={login}
               >
