@@ -133,19 +133,18 @@ const EditorofAudio = () => {
   };
 
   const handleFileButtonClick = () => {
-    document.getElementById('hiddenFileInput').click();
+    document.getElementById("hiddenFileInput").click();
   };
 
   return (
     <div>
       <button onClick={handleFileButtonClick}>Choose Audio</button>
       <input
-      id="hiddenFileInput"
+        id="hiddenFileInput"
         type="file"
         accept="audio/*"
         onChange={handleFileChange}
         style={{ display: "none", margin: "10px 0" }}
-        
       />
       <div id="waveform" ref={waveformRef}></div>
       <button onClick={playPause}>Play/Pause</button>
@@ -162,9 +161,13 @@ const EditorofAudio = () => {
           onChange={(e) => setEnd(parseFloat(e.target.value))}
           placeholder="End Time (s)"
         />
-        <button onClick={playSelectedPart} disabled={isPlaying}>Play Selected Part</button>
-      <button onClick={stopPlaying} disabled={!isPlaying}>Stop Playing</button>
-      <button onClick={resetSelection}>Reset Selection</button>
+        <button onClick={playSelectedPart} disabled={isPlaying}>
+          Play Selected Part
+        </button>
+        <button onClick={stopPlaying} disabled={!isPlaying}>
+          Stop Playing
+        </button>
+        <button onClick={resetSelection}>Reset Selection</button>
       </div>
       <progress
         value={playbackProgress}

@@ -1,0 +1,1 @@
+{"redirect_uris":["http://localhost:3000/"],"client_id":"e37f9cbf0feb91673abfcc081e1a9c72","client_secret":"79a4e62a2ccb0902c35bcf98b014e7b9","response_types":["code"],"grant_types":["authorization_code","refresh_token"],"application_type":"web","client_name":"Krero","subject_type":"public","id_token_signed_response_alg":"RS256","token_endpoint_auth_method":"client_secret_basic"}

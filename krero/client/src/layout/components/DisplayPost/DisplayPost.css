@@ -1,0 +1,362 @@
+.displayPost-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.displayPost-text {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.displayPost-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+.displayPost-audio {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.displayPost-file {
+  margin-bottom: 20px;
+}
+
+.post-actions {
+  margin-top: 10px;
+}
+
+.contact-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.displayPost-file-content {
+  flex-grow: 1; /* 使内容占用所有可用空间 */
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.post-actions button {
+  padding: 5px 15px;
+  margin-left: 10px; /* 与其他内容保持一定间距 */
+  background-color: #4caf50; /* 绿色背景 */
+  color: white; /* 白色文字 */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+}
+
+.post-actions button:hover {
+  background-color: #45a049; /* 鼠标悬停时变暗 */
+}
+
+.copied-message {
+  display: none; /* 默认不显示 */
+  color: #28a745;
+  margin-left: 10px;
+}
+
+.copied-message.active {
+  display: inline; /* 当复制时显示 */
+}
+.added-contacts {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.added-contact {
+  background-color: #e9ecef;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.contact-item button {
+  margin-left: 10px;
+  background-color: #ff4d4d;
+}
+
+.contact-item button:hover {
+  background-color: #ff1a1a;
+}
+.container-url-header {
+  position: sticky;
+  top: 60px; /* 根据你的页面布局，你可能需要调整这个值 */
+  background-color: white;
+  padding: 10px;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+}
+
+.input-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 给模态框添加阴影 */
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end; /* 将按钮放置在右侧 */
+  align-items: center;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  background-image: linear-gradient(to right, #06b, #06d); /* 添加渐变背景 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* 添加过渡效果 */
+}
+
+.button:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 鼠标悬浮时添加阴影 */
+  transform: translateY(-2px); /* 鼠标悬浮时稍微抬起按钮 */
+}
+
+/* 可能还需要添加其他样式来美化URL展示部分 */
+.url-display {
+  margin-bottom: 20px; /* 添加一些底部空间 */
+  font-size: 1rem; /* 调整字体大小 */
+  overflow: hidden; /* 防止内容溢出 */
+  text-overflow: ellipsis; /* 添加省略号来处理超长文本 */
+  white-space: nowrap; /* 确保URL在一行内显示 */
+}
+.post-status-icon {
+  width: 24px; /* 或者根据您的布局调整尺寸 */
+  height: 24px;
+  border: none; /* 或者 '1px solid #ccc' 如果您需要边框 */
+  border-radius: 20%; /* 如果您想要圆形图标 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 添加一些阴影效果 */
+  transition: transform 0.3s ease; /* 平滑的变换效果 */
+}
+
+.post-status-icon:hover {
+  transform: scale(1.1); /* 鼠标悬停时放大图标 */
+  cursor: pointer;
+}
+
+/* 覆盖整个屏幕的背景 */
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: Teal;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(17, 134, 136, 0.27);
+
+  z-index: 1001;
+  width: fit-content;
+  max-width: 90%;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Modal Button */
+.modal-button {
+  min-width: 80px;
+  margin: 5px;
+}
+
+/* Animation */
+@keyframes modalIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.post-files-list {
+  margin-top: 10px;
+  padding: 10px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-file-item {
+  margin: 5px 0;
+  padding: 5px;
+  transition: background-color 0.2s;
+}
+
+.post-file-item:hover {
+  background-color: #e8e8e8;
+  cursor: pointer;
+}
+
+.post-file-name {
+  font-weight: bold;
+}
+
+.post-file-url {
+  display: none;
+  word-break: break-all;
+}
+
+.post-file-item:hover .post-file-url {
+  display: block;
+}
+
+.post-files-panel {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Spacing between file entries */
+  overflow: hidden;
+  transition: max-height 0.3s ease-out; /* Smooth transition for toggle effect */
+}
+
+.post-files-panel.collapsed {
+  max-height: 0;
+  padding: 0 10px; /* Maintain horizontal padding but remove vertical padding */
+  margin-top: 0;
+}
+
+.post-file-item {
+  cursor: pointer; /* Indicates that the item is clickable */
+  padding: 5px; /* Padding inside each file entry */
+  border: 1px solid #ccc; /* Border for each file entry */
+  background-color: #fff; /* White background for file entries */
+  transition: background-color 0.2s; /* Smooth background color transition on hover */
+}
+
+.post-file-item:hover {
+  background-color: #e9e9e9; /* Light grey background on hover */
+}
+
+.post-panel-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.post-panel-expanded {
+  max-height: 500px; /* Adjust as needed */
+  transition: max-height 0.2s ease-in;
+}
+
+/* Style for the clickable URLs */
+.url-copy {
+  cursor: pointer;
+  color: #0645ad; /* Hyperlink color */
+  text-decoration: underline;
+}
+
+/* Optional: Style for indicating that the URL was copied */
+.url-copied {
+  color: #04aa6d; /* Feedback color */
+}
+.post-files-list {
+  padding: 5px; /* Padding inside the files list */
+  background-color: #fff; /* White background for the files list */
+  border-top: 1px solid #000; /* Separate the files list from the header */
+}
+
+.post-file-item {
+  cursor: pointer; /* Indicates the URLs are clickable */
+  padding: 5px; /* Padding for each file item */
+  border-bottom: 1px solid #ddd; /* Separator between file items */
+}
+
+.post-file-item:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.post-file-item p {
+  margin: 0; /* Remove default margin from paragraphs */
+}
+.copied {
+  color: green; /* Or any other visual cue you prefer */
+}

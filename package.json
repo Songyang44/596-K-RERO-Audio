@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@inrupt/solid-client-authn-browser": "^2.0.0",
+    "@ldo/solid-react": "^0.0.1-alpha.17"
+  }
+}

@@ -1,0 +1,142 @@
+.add-post-container {
+  font-family: "Arial", sans-serif;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.add-post-container button,
+.text-input,
+.file-input,
+.textarea-input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.add-post-container .record-button {
+  background-color: #ff4c4c;
+  color: white;
+}
+
+.add-post-container .record-button.recording {
+  background-color: #4caf50;
+}
+
+.add-post-container .record-button:hover {
+  background-color: #e04444;
+}
+
+.add-post-container .submit-button,
+.add-post-container .reset-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.add-post-container .submit-button:hover,
+.add-post-container .reset-button:hover {
+  background-color: #45a049;
+}
+.add-post-container .image-upload-button {
+  background-color: #4c86ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s;
+}
+
+.add-post-container .image-upload-button:hover {
+  background-color: #3a6fd1;
+}
+.upload-label {
+  display: block;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.canvas-container {
+  margin-top: 20px;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.image-preview {
+  text-align: center;
+}
+.add-post-container .countdown-display {
+  font-size: 1.5em;
+  color: #4cdeff;
+  text-align: center;
+  margin: 20px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff3f3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.add-post-container .countdown-display {
+  animation: pulse 1s infinite;
+}
+
+@media (max-width: 768px) {
+  .add-post-container {
+    padding: 15px;
+  }
+}
+.add-post-container .back-button {
+  background-color: #4c86ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s;
+}
+
+.add-post-container .back-button:hover {
+  background-color: #3a6fd1;
+}
+
+.add-post-container .cancel-button {
+  background-color: #44e0c3;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+  transition: background-color 0.3s;
+}
+
+.add-post-container .cancel-button:hover {
+  background-color: #44e0c3;
+}

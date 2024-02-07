@@ -1,0 +1,58 @@
+.container {
+  font-family: "Helvetica Neue", sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.waveformContainer {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  height: 200px;
+  margin: 20px 0;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  background-color: #6200ee;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px;
+  padding: 10px 15px;
+}
+
+.button:hover {
+  background-color: #7f29ee;
+}
+
+.time {
+  margin: 10px 0;
+}
+
+.slider {
+  width: 100%;
+  cursor: pointer;
+}
+
+.fileInput {
+  display: none;
+}
+
+.hoverTime {
+  color: #666;
+  margin-top: 10px;
+}

@@ -1,0 +1,98 @@
+/* Translation.css */
+
+.translation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  .input-text, .translated-text > textarea {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 20px;
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  .input-text::placeholder, .translated-text > textarea::placeholder {
+    color: #bbb;
+  }
+  
+  .translate-button {
+    padding: 10px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+  }
+  
+  .translate-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .translated-text {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+/* Enhanced styles for the bottom textarea */
+.translated-text > textarea {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #007bff; /* A solid border with a color matching the translate button */
+    border-radius: 8px; /* Rounded corners */
+    background-color: #fafafa; /* A light background color */
+    color: #333; /* Text color for better readability */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle inner shadow for depth */
+    resize: vertical; /* Allows vertical resizing only */
+    outline: none; /* Removes the default focus outline */
+  }
+  
+  .translated-text > textarea:focus {
+    border-color: #0056b3; /* Darker border color on focus for visual feedback */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Slightly darker inner shadow on focus */
+  }
+  
+  /* Optional: Adding a placeholder style for the textarea */
+  .translated-text > textarea::placeholder {
+    color: #aaa; /* Lighter text color for the placeholder */
+  }
+
+  .clear-button {
+    padding: 10px 30px;
+    background-color: #dc3545; /* Red color for clear button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px; /* Add some space between the buttons */
+    transition: background-color 0.3s;
+  }
+  
+  .clear-button:hover {
+    background-color: #c82333; /* Slightly darker red on hover */
+  }
+  
+  
+  

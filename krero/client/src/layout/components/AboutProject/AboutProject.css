@@ -1,0 +1,21 @@
+/* Accordion.css */
+.accordion-section {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .accordion-title {
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .accordion-content {
+    padding: 10px 15px;
+  }
+  
